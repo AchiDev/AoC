@@ -15,6 +15,11 @@ namespace AdventOfCode.Aoc2020
             {
                 DoDay02();
             }
+
+            if (!day.HasValue || day == 3)
+            {
+                DoDay03();
+            }
         }
 
         private void DoDay01()
@@ -39,6 +44,19 @@ namespace AdventOfCode.Aoc2020
             string part2 = day2.ToString();
 
             OutputHelper.PrintDay(2, part1, part2);
+        }
+
+
+        private void DoDay03()
+        {
+            var day3 = new Day03(1);
+            string part1 = day3.ToString();
+
+
+            day3 = new Day03(2);
+            string part2 = day3.ToString();
+
+            OutputHelper.PrintDay(3, part1, part2);
         }
     }
 }
