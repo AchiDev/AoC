@@ -82,51 +82,65 @@ namespace AdventOfCode.Aoc2021
             string[] drawnNumbers = boards[0].Split(',');
             boards = boards.Where(m => !m.Contains(',')).ToArray();
             int notMarkedNumbers;
-            int counter = 0;
+
 
             var listOfBoards = new Boards();
+            var secondListOfBoards = new List<Board>();
 
             for (int i = 0; i < boards.Length; i++)
             {
                 listOfBoards.Add(new Board(bingoboard: boards[i]));
             }
 
+
+
             foreach (var drawnNumber in drawnNumbers)
             {
                 listOfBoards.SelectMany(board => board.BoardLines).SelectMany(line => line.BoardNumbers).Where(number => number.Number == drawnNumber).ToList().ForEach(number => number.isMarked = true);
                 for (int i = 0; i < listOfBoards.Count; i++)
                 {
-                    for (int column = 0; column < listOfBoards[i].BoardLines[0].BoardNumbers.Count; column++)
+                    if (listOfBoards.Count == 1)
                     {
-                        for (int line = 0; line < listOfBoards[i].BoardLines.Count; line++)
-                        {
-                            if (!listOfBoards[i].BoardLines[line].BoardNumbers[column].isMarked)
-                            {
-                                break;
-                            }
-                            if (line == listOfBoards[i].BoardLines.Count - 1)
-                            {
-                              counter++;
-                            }
-                        }
+                        Console.WriteLine(drawnNumber);
+                        notMarkedNumbers = int.Parse(drawnNumber) * listOfBoards[i].BoardLines.SelectMany(line => line.BoardNumbers).Where(number => !number.isMarked).Sum(number => int.Parse(number.Number));
+                        return notMarkedNumbers;
+                    }
+                    
+                    if (GetBoardVertical(listOfBoards[i]))
+                    {
+                        listOfBoards.Remove(listOfBoards[i]);
+                        continue;
                     }
 
                     if (listOfBoards[i].BoardLines.Select(line => line.BoardNumbers).Any(number => number.All(m => m.isMarked)))
                     {
-                        counter++;
+                        listOfBoards.Remove(listOfBoards[i]); ;
+                        continue;
                     }
-
-                    if (listOfBoards.Count == counter - 2)
-                    {
-                        notMarkedNumbers = int.Parse(drawnNumber) * listOfBoards[i].BoardLines.SelectMany(line => line.BoardNumbers).Where(number => !number.isMarked).Sum(number => int.Parse(number.Number));
-                        return notMarkedNumbers;
-                    }
-
-
 
                 }
             }
             return 0;
+        }
+
+        public bool GetBoardVertical(Board board)
+        {
+            for (int column = 0; column < board.BoardLines[0].BoardNumbers.Count; column++)
+            {
+                for (int line = 0; line < board.BoardLines.Count; line++)
+                {
+                    if (!board.BoardLines[line].BoardNumbers[column].isMarked)
+                    {
+                        break;
+                    }
+                    if (line == board.BoardLines.Count - 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

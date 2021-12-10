@@ -3,7 +3,7 @@ namespace AdventOfCode.Aoc2021
     using AdventOfCode.Helpers;
     public class Year2021
     {
-        public void Run(int? day = 4)
+        public void Run(int? day = 10)
         {
             if (!day.HasValue || day == 1)
             {
@@ -43,6 +43,16 @@ namespace AdventOfCode.Aoc2021
             if (!day.HasValue || day == 8)
             {
                 DoDay08();
+            }
+
+            if (!day.HasValue || day == 9)
+            {
+                DoDay09();
+            }
+
+            if (!day.HasValue || day == 10)
+            {
+                DoDay10();
             }
         }
 
@@ -89,7 +99,7 @@ namespace AdventOfCode.Aoc2021
 
 
             day = new Day04(2);
-            string part2 = day.ToString() + " Falsch!!!!";
+            string part2 = day.ToString();
 
             OutputHelper.PrintDay(4, part1, part2);
         }
@@ -140,6 +150,30 @@ namespace AdventOfCode.Aoc2021
             string part2 = day.ToString();
 
             OutputHelper.PrintDay(8, part1, part2);
+        }
+
+        private void DoDay09()
+        {
+            var day = new Day09(1);
+            string part1 = day.ToString();
+
+
+            day = new Day09(2);
+            string part2 = day.ToString();
+
+            OutputHelper.PrintDay(9, part1, part2);
+        }
+
+        private void DoDay10()
+        {
+            var day = new Day10(1);
+            string part1 = day.ToString();
+
+
+            day = new Day10(2);
+            string part2 = day.ToString();
+
+            OutputHelper.PrintDay(10, part1, part2);
         }
     }
 }
